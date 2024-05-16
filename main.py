@@ -1,3 +1,9 @@
-a=10
-b=20
-print(a+b)
+A = 15
+
+B = 20
+
+c = A-B
+
+print(c)
+
+print("Hari")
