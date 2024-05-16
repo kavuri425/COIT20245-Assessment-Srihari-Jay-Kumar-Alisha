@@ -1,3 +1,3 @@
-print("Hello,world")
-print("hellomain")
-print("hellomain")
+a=10
+b=20
+print(a+b)
