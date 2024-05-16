@@ -18,5 +18,36 @@ def main():
 
 if __name__ == "__main__":
     main()
+    def display_menu():
+
+     menu = ""
+
+
+     print(menu)
+
+def main():
+    display_menu()
+    
+    while True:
+        command = input("wildlife> ").strip().lower()
+        
+        if command == "help":
+            display_menu()
+        elif command == "list":
+            print("Listing all tracked animals...")
+        elif command == "add":
+            print("Adding a new animal...")
+        elif command == "remove":
+            print("Removing an animal...")
+
+        elif command == "exit":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Error: Invalid command. Type 'help' to see the list of available commands.")
+
+if __name__ == "__main__":
+    main()
+#Task 2 Input user#
 
  
