@@ -15,7 +15,7 @@ def display_menu():
     print("Display help                       wildlife> help")
     print("Exit the application               wildlife> exit")
     print("Display animal species in a city   wildlife> species Brisbane")
-    print("Display animal sightings in a city wildlife> sightings Brisbane ")
+    print("Display animal sightings in a city wildlife> sightings Brisbane 15255")
     print("Display venomous species           wildlife> species Brisbane venomous")
 
 def main():
@@ -71,7 +71,9 @@ def filter_venomous(species_list):
     return [species for species in species_list if safe_get(species, 'PestStatus') == "Venomous"]
 
 def gps(city):
+    print(nominatim.gps_coordinate(city))
     return nominatim.gps_coordinate(city)
+  
 
 def earliest(sightings):
     return min(sightings, key=lambda x: safe_get(x, 'StartDate'))
