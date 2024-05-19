@@ -9,7 +9,7 @@ def gps_coordinate(city):
     data = response.json()[0]
     return {"latitude": float(data['lat']), "longitude": float(data['lon'])}
 
-# Add assert statements for testing
+# Add assert statements for testing 
 def test_gps_coordinate():
     brisbane_coords = gps_coordinate("Brisbane")
     assert isinstance(brisbane_coords, dict)
