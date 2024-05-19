@@ -12,6 +12,7 @@ def get_species_list(coordinate, radius):
 def get_surveys_by_species(coordinate, radius, taxonid):
     url = f"https://apps.des.qld.gov.au/species/?op=getsurveysbyspecies&taxonid={taxonid}&&circle={coordinate['latitude']},{coordinate['longitude']},{radius}"
     response = requests.get(url=url, headers=headers)
+    print(response.json())
     data = response.json()['features']
     return [sighting['properties'] for sighting in data if sighting['properties'].get('SiteCode') == 'INCIDENTAL']
 
