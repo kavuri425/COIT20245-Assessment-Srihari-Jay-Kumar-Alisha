@@ -2,6 +2,12 @@ import nominatim
 import wildlife
 import requests
 
+def safe_get(d, key):
+    try:
+        return d[key]
+    except KeyError:
+        return None
+
 def display_menu():
     print("Help")
     print("====")
@@ -32,10 +38,13 @@ def main():
                 display_species(species_list)
         elif command.startswith("sightings "):
             parts = command.split(" ")
-            city = parts[1]
-            taxonid = parts[2]
-            sightings = search_sightings(taxonid, city)
-            display_sightings(sightings)
+            if len(parts) < 3:
+                print("Error: The 'sightings' command requires a city and a taxonid.")
+            else:
+                city = parts[1]
+                taxonid = parts[2]
+                sightings = search_sightings(taxonid, city)
+                display_sightings(sightings)
         else:
             print("Invalid command. Type 'help' for available commands.")
 
@@ -46,7 +55,7 @@ def search_species(city):
 
 def display_species(species_list):
     for species in species_list:
-        print(f"{species['AcceptedCommonName']} - {species.get('PestStatus', 'Unknown')}")
+        print(f"{safe_get(species, 'AcceptedCommonName')} - {safe_get(species, 'PestStatus') or 'Unknown'}")
 
 def search_sightings(taxonid, city):
     coordinate = gps(city)
@@ -56,19 +65,19 @@ def search_sightings(taxonid, city):
 def display_sightings(sightings):
     sorted_sightings = sort_by_date(sightings)
     for sighting in sorted_sightings:
-        print(f"Sighting Date: {sighting['StartDate']}, Location: {sighting['LocalityDetails']}")
+        print(f"Sighting Date: {safe_get(sighting, 'StartDate')}, Location: {safe_get(sighting, 'LocalityDetails')}")
 
 def filter_venomous(species_list):
-    return [species for species in species_list if species.get('PestStatus') == "Venomous"]
+    return [species for species in species_list if safe_get(species, 'PestStatus') == "Venomous"]
 
 def gps(city):
     return nominatim.gps_coordinate(city)
 
 def earliest(sightings):
-    return min(sightings, key=lambda x: x['StartDate'])
+    return min(sightings, key=lambda x: safe_get(x, 'StartDate'))
 
 def sort_by_date(sightings):
-    return sorted(sightings, key=lambda x: x['StartDate'])
+    return sorted(sightings, key=lambda x: safe_get(x, 'StartDate'))
 
 if __name__ == "__main__":
     main()
