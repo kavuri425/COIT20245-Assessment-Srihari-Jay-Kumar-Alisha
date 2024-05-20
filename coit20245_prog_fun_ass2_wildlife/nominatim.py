@@ -14,6 +14,7 @@ def test_gps_coordinate():
     brisbane_coords = gps_coordinate("Brisbane")
     assert isinstance(brisbane_coords, dict)
     assert 'latitude' in brisbane_coords and 'longitude' in brisbane_coords
+    print(nominatim.gps_coordinate('Brisbane'))
 
 if __name__ == "__main__":
     test_gps_coordinate()
